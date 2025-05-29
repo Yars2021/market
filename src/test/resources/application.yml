@@ -1,0 +1,17 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+    session:
+      timeout: 600s
+
+spring:
+  application:
+    name: market
+  datasource:
+    url: jdbc:h2:mem:market
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    spring.jpa.database-platform: org.hibernate.dialect.H2Dialect

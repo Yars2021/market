@@ -1,0 +1,22 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api/
+    session:
+      timeout: 600s
+
+spring:
+  application:
+    name: market
+  datasource:
+    url: jdbc:postgresql://192.168.1.98:15432/postgres
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true

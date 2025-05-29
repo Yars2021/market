@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Market app user page</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link href="./styles/main.css" rel="stylesheet">
+        <script>
+            const url_prefix = "http://localhost:8080/users/"
+            const user = window.location.href.split("?")[1]
+
+            $.ajax({
+                url: url_prefix + user,
+                type: "GET",
+                data: "",
+                success: function(user_data) {
+                    console.log(user_data)
+
+                    $("#username").text(user_data.name);
+
+                    $("#field_name").val(user_data.name);
+                    $("#field_balance").val(user_data.balance);
+                    $("#field_repS").val(user_data.reputationSeller);
+                    $("#field_repB").val(user_data.reputationBuyer);
+
+                    $("#user_edit").click(function() {
+	                    const new_user_data = {
+                            "password": "22",
+                            "name": $("#field_name").val(),
+                            "balance": $("#field_balance").val(),
+                            "reputationSeller": $("#field_repS").val(),
+                            "reputationBuyer": $("#field_repB").val(),
+                        };
+
+			console.log("url: " + url_prefix + user);
+                        console.log(JSON.stringify(new_user_data));
+
+                        $.ajax({
+                            url: url_prefix + user,
+                            type: "PUT",
+                            dataType: 'json',
+                            crossDomain: true,
+                            contentType: "application/json",
+                            data: JSON.stringify(new_user_data),
+                            success: function(response) {},
+                            error: function(xhr, status, error) {
+                                alert("Error editing user!");
+                                console.error("Error editing user.\nStatus: " + status + "\nMessage: \n" + error);
+                            }
+                        });
+                    });
+
+                    $("#user_delete").click(function() {
+                        $.ajax({
+                            url: url_prefix + user,
+                            type: "DELETE",
+                            success: function(response) {
+                                window.location.href = "index.html"
+                            },
+                            error: function(xhr, status, error) {
+                                alert("Error deleting user!");
+                                console.error("Error deleting user.\nStatus: " + status + "\nMessage: \n" + error);
+                            }
+                        });
+                    });
+                },
+                error: function(xhr, status, error) {
+                    alert("Error getting user info from backend!");
+                    console.error("Error getting user info from backend.\nStatus: " + status + "\nMessage: \n" + error);
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <h2 id="username">
+            User page (placeholder)
+        </h2>
+        <hr>
+        <table>
+            <tr>
+                <td>Full Name</td>
+                <td><input type="text" id="field_name"/></td>
+            </tr>
+            <tr>
+                <td>Balance</td>
+                <td><input type="text" id="field_balance"/></td>
+            </tr>
+            <tr>
+                <td>Salesman Reputation</td>
+                <td><input type="text" id="field_repS"/></td>
+            </tr>
+            <tr>
+                <td>Buyer Reputation</td>
+                <td><input type="text" id="field_repB"/></td>
+            </tr>
+        </table>
+        <button id="go_back" onclick="document.location='index.html'" class="nav">Back to the main page</button>
+        <button id="user_edit" class="nav">Save</button>
+        <button id="user_delete" class="nav">Delete user</button>
+        <hr>
+    </body>
+</html>

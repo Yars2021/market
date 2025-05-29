@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Market app</title>
+        <link href="./styles/main.css" rel="stylesheet">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <script>
+            const url_prefix = "http://localhost:8080/"
+            const full_page_url = url_prefix + "users";
+
+            $.ajax({
+                url: full_page_url,
+                type: "GET",
+                data: "",
+                success: function(response) {
+                    $(".users_table").append(
+                        "<tr>" +
+                            "<th>Profile</th>" +
+                            "<th>Login</th>" +
+                            "<th>Name</th>" +
+                            "<th>Balance</th>" +
+                            "<th>Salesman Reputation</th>" +
+                            "<th>Buyer Reputation</th>" +
+                        "</tr>"
+                    )
+                    response.forEach(function(item) {
+                        $(".users_table").append(
+                            "<tr id='user_" + item.login + "'>" +
+                                "<td><a id='link_user_" + item.login + "' class='market' href='user.html?" + item.login + "'>link</td>" +
+                                "<td>" + item.login + "</td>" +
+                                "<td>" + item.name + "</td>" +
+                                "<td>" + item.balance + "</td>" +
+                                "<td>" + item.reputationSeller + "</td>" +
+                                "<td>" + item.reputationBuyer + "</td>" +
+                            "</tr>"
+                        )
+                    });
+
+                    $("#user_add").click(function() {
+                        $.ajax({
+                            url: full_page_url,
+                            type: "POST",
+                            contentType: "application/json",
+                            data: '{' +
+                                '"login": "' + $("#field_login").val() + '", ' +
+                                '"password": "' + $("#field_password").val() + '", ' +
+                                '"name": "' + $("#field_name").val() + '", ' +
+                                '"balance": ' + $("#field_balance").val() + ', ' +
+                                '"reputationSeller": ' + $("#field_repS").val() + ', ' +
+                                '"reputationBuyer": ' + $("#field_repB").val() +
+                            '}',
+                            success: function(response) {},
+                            error: function(xhr, status, error) {
+                                alert("Error adding a user!");
+                                console.error("Error adding a user.\nStatus: " + status + "\nMessage: \n" + error);
+                            }
+                        });
+
+                        const current_href = window.location.href;
+                        window.location.href = current_href;
+                    });
+                },
+                error: function(xhr, status, error) {
+                    alert("Error getting users from backend!");
+                    console.error("Error getting users from backend.\nStatus: " + status + "\nMessage: \n" + error);
+                }
+            });
+        </script>
+    </head>
+    <body>
+        <h2>Users table</h2>
+        <hr>
+        <table>
+            <tr>
+                <td>Login</td>
+                <td><input type="text" id="field_login"/></td>
+            </tr>
+            <tr>
+                <td>Password</td>
+                <td><input type="text" id="field_password"/></td>
+            </tr>
+            <tr>
+                <td>Full Name</td>
+                <td><input type="text" id="field_name"/></td>
+            </tr>
+            <tr>
+                <td>Balance</td>
+                <td><input type="text" id="field_balance"/></td>
+            </tr>
+            <tr>
+                <td>Salesman Reputation</td>
+                <td><input type="text" id="field_repS"/></td>
+            </tr>
+            <tr>
+                <td>Buyer Reputation</td>
+                <td><input type="text" id="field_repB"/></td>
+            </tr>
+        </table>
+        <button id="user_add" class="nav">Add user</button>
+        <hr>
+        <table class="users_table">
+        </table>
+    </body>
+</html>
