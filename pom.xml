@@ -28,6 +28,9 @@
 	</scm>
 	<properties>
 		<java.version>17</java.version>
+		<properties>
+			<sonar.organization>yars2021</sonar.organization>
+		</properties>
 		<sonar.coverage.jacoco.xmlReportPaths>
 			../market/target/site/jacoco-aggregate/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>
