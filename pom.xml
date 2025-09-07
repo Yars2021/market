@@ -122,6 +122,9 @@
 						<configuration>
 							<dataFile>${project.build.directory}/coverage-reports/jacoco.exec</dataFile>
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco</outputDirectory>
+							<formats>
+				              <format>XML</format>
+				            </formats>
 						</configuration>
 					</execution>
 					<execution>
