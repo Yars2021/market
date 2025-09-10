@@ -24,12 +24,14 @@ class UserControllerTest {
     @Test
     void getAllUsers() {
         assertNotNull(userController);
+        assertDoesNotThrow(() -> userController.getAllUsers());
         assertNotEquals(0, userController.getAllUsers().size());
     }
 
     @Test
     void getUser() {
         assertNotNull(userController);
+        assertDoesNotThrow(() -> userController.getUser("yars"));
         assertEquals(111, userController.getUser("yars").getReputationSeller());
     }
 
@@ -43,6 +45,7 @@ class UserControllerTest {
         user.setBalance(1L);
         user.setReputationBuyer(2);
         user.setReputationSeller(3);
+        assertDoesNotThrow(() -> userController.createUser(user));
         assertNotNull(userController.createUser(user));
     }
 
@@ -57,6 +60,6 @@ class UserControllerTest {
         User user = userController.getUser("ja_vani");
         assertNotNull(user);
         user.setName("ja_vani2");
-        userController.updateUser("ja_vani", user);
+        assertDoesNotThrow(() -> userController.updateUser("ja_vani", user));
     }
 }
