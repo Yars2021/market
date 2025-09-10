@@ -16,23 +16,23 @@ class ItemTest {
     @BeforeEach
     void setUp() {
         item = new Item();
-        item.setId(1);
-        item.setType(2);
+        item.setId(1L);
+        item.setType(2L);
         item.setOwner(3L);
         item.setName("test");
-        item.setRarity(4);
+        item.setRarity(4L);
         item.setDescription("TEST");
         item.setOffers(new HashSet<Offer>());
     }
 
     @Test
     void getId() {
-        assertEquals(1, item.getId());
+        assertEquals(1L, item.getId());
     }
 
     @Test
     void getType() {
-        assertEquals(2, item.getType());
+        assertEquals(2L, item.getType());
     }
   
     @Test
@@ -47,7 +47,7 @@ class ItemTest {
 
     @Test
     void getRarity() {
-        assertEquals(4, item.getRarity());
+        assertEquals(4L, item.getRarity());
     }
 
     @Test
