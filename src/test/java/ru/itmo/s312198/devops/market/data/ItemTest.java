@@ -17,10 +17,10 @@ class ItemTest {
     void setUp() {
         item = new Item();
         item.setId(1L);
-        item.setType(2L);
+        item.setType(2);
         item.setOwner(3L);
         item.setName("test");
-        item.setRarity(4L);
+        item.setRarity(4);
         item.setDescription("TEST");
         item.setOffers(new HashSet<Offer>());
     }
@@ -32,7 +32,7 @@ class ItemTest {
 
     @Test
     void getType() {
-        assertEquals(2L, item.getType());
+        assertEquals(2, item.getType());
     }
   
     @Test
@@ -47,7 +47,7 @@ class ItemTest {
 
     @Test
     void getRarity() {
-        assertEquals(4L, item.getRarity());
+        assertEquals(4, item.getRarity());
     }
 
     @Test
