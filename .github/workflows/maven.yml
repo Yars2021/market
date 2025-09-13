@@ -12,14 +12,37 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+  
     - name: Build with Maven
+      id: maven_build
       run: mvn -B compile package --file pom.xml
+
+    - name: Build tg message success
+      if: steps.maven_build.outcome == 'success'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_DST }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          **Market backend:**
+          Commit ${{ github.event.commits[0].message }} by ${{ github.actor }} was built successfully!
+
+    - name: Build tg message fail
+      if: steps.maven_build.outcome != 'success'
+      uses: appleboy/telegram-action@master
+      with:
+        to: ${{ secrets.TELEGRAM_DST }}
+        token: ${{ secrets.TELEGRAM_TOKEN }}
+        message: |
+          **Market backend:**
+          Build failed for commit ${{ github.event.commits[0].message }} by ${{ github.actor }}!
 
   test:
     needs: build
@@ -27,12 +50,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
+
     - name: Set up JDK 21
       uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'temurin'
         cache: maven
+  
     - name: Build with Maven
       run: mvn -B compile test package --file pom.xml
 
