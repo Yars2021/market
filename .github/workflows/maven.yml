@@ -220,7 +220,7 @@ jobs:
           token: ${{ secrets.TELEGRAM_TOKEN }}
           message: |
             Market backend:
-            New image was successfully deployed and is available at ${{ secrets.SSH_HOST }}!
+            New image was successfully deployed. API is available at http://${{ secrets.SSH_HOST }}:8080!
 
       - name: VK deploy
         if: steps.deploy_vk.outcome != 'success'
