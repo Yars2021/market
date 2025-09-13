@@ -195,3 +195,17 @@ jobs:
           message: |
             Market backend:
             Docker image build failed for commit "${{ github.event.commits[0].message }}" by ${{ github.actor }}!
+
+  deploy_to_vk:
+    needs: push_dockerhub
+
+    runs-on: ubuntu-latest
+    steps:
+      - name: Connect to remote
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: altlinux
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: cat ~/.bashrc
