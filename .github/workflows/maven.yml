@@ -31,8 +31,8 @@ jobs:
         to: ${{ secrets.TELEGRAM_DST }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: |
-          **Market backend:**
-          Commit ${{ github.event.commits[0].message }} by ${{ github.actor }} was built successfully!
+          Market backend:
+          Commit "${{ github.event.commits[0].message }}" by ${{ github.actor }} was built successfully!
 
     - name: Build tg message fail
       if: steps.maven_build.outcome != 'success'
@@ -41,8 +41,8 @@ jobs:
         to: ${{ secrets.TELEGRAM_DST }}
         token: ${{ secrets.TELEGRAM_TOKEN }}
         message: |
-          **Market backend:**
-          Build failed for commit ${{ github.event.commits[0].message }} by ${{ github.actor }}!
+          Market backend:
+          Build failed for commit "${{ github.event.commits[0].message }}" by ${{ github.actor }}!
 
   test:
     needs: build
