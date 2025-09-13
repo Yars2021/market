@@ -221,4 +221,13 @@ jobs:
           message: |
             Market backend:
             New image was successfully deployed and is available at ${{ secrets.SSH_HOST }}!
-  
+
+      - name: VK deploy
+        if: steps.deploy_vk.outcome != 'success'
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_DST }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          message: |
+            Market backend:
+            New image was deployment failed!
